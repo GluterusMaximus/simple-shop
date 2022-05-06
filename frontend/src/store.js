@@ -1,7 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
 import thunk from 'redux-thunk'
+import { productListReducer } from './reducers/productReducers.js'
 
-const reducer = {}
+const reducer = {
+  productList: productListReducer,
+}
 
 const preloadedState = {}
 
