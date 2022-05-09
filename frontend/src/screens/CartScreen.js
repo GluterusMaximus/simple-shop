@@ -9,6 +9,7 @@ const CartScreen = () => {
   const dispatch = useDispatch()
   const { id: productId } = useParams()
   const location = useLocation()
+  const navigate = useNavigate()
 
   const qty = location.search ? Number(location.search.split('=')[1]) : 1
   console.log(qty, productId)
@@ -27,7 +28,7 @@ const CartScreen = () => {
   }
 
   const checkoutHandler = () => {
-    console.log('checkout')
+    navigate('/login?redirect=shipping')
   }
 
   return (
