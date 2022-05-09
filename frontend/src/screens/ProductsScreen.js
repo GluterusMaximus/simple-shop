@@ -17,7 +17,7 @@ import Loader from '../components/Loader.js'
 import Message from '../components/Message.js'
 
 const ProductsScreen = ({ history }) => {
-  const [qty, setQty] = useState(0)
+  const [qty, setQty] = useState(1)
   const { id } = useParams()
   const navigate = useNavigate()
   const dispatch = useDispatch()
