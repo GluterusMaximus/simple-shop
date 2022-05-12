@@ -12,7 +12,6 @@ const CartScreen = () => {
   const navigate = useNavigate()
 
   const qty = location.search ? Number(location.search.split('=')[1]) : 1
-  console.log(qty, productId)
 
   useEffect(() => {
     if (productId) {
