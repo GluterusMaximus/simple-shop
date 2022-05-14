@@ -8,6 +8,8 @@ import { cartReducer } from './reducers/cartReducers.js'
 import {
   userLoginReducer,
   userRegisterReducer,
+  userDetailsReducer,
+  userUpdateProfileReducer,
 } from './reducers/userReducers.js'
 
 const reducer = {
@@ -16,6 +18,8 @@ const reducer = {
   cart: cartReducer,
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
+  userDetails: userDetailsReducer,
+  userUpdateProfile: userUpdateProfileReducer,
 }
 
 const cartItemsFromStorage = localStorage.getItem('cartItems')
