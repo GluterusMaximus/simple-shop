@@ -45,7 +45,7 @@ const createProduct = asyncHandler(async (req, res) => {
   const product = new Product({
     name: 'Sample name',
     price: 0,
-    users: req.user._id,
+    user: req.user._id,
     image: '/images/sample.jpg',
     brand: 'Sample brand',
     category: 'Sample category',
@@ -64,7 +64,7 @@ const createProduct = asyncHandler(async (req, res) => {
 const updateProduct = asyncHandler(async (req, res) => {
   const { name, price, description, image, brand, category, countInStock } =
     req.body
-  const product = Product.findById(req.params.id)
+  const product = await Product.findById(req.params.id)
 
   if (product) {
     product.name = name
