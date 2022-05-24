@@ -69,7 +69,30 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
     const updatedOrder = await order.save()
     res.json(updatedOrder)
   } else {
-    res.json(404)
+    res.status(404)
+    throw new Error('Order not found')
+  }
+})
+
+// @desc     Update an order to delivered
+// @route    PUT /api/orders/:id/deliver
+// @access   Private/Admin
+const updateOrderToDelivered = asyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id)
+
+  if (order) {
+    if (!order.isPaid) {
+      res.status(400)
+      throw new Error('Only paid orders can be delivered')
+    }
+
+    order.isDelivered = true
+    order.deliveredAt = Date.now()
+
+    const updatedOrder = await order.save()
+    res.json(updatedOrder)
+  } else {
+    res.status(404)
     throw new Error('Order not found')
   }
 })
@@ -83,4 +106,20 @@ const getMyOrders = asyncHandler(async (req, res) => {
   res.json(orders)
 })
 
-export { addOrderItems, getOrderById, updateOrderToPaid, getMyOrders }
+// @desc     Get all orders
+// @route    GET /api/orders
+// @access   Private/Admin
+const getOrders = asyncHandler(async (req, res) => {
+  const orders = await Order.find({}).populate('user', 'id name')
+
+  res.json(orders)
+})
+
+export {
+  addOrderItems,
+  getOrderById,
+  updateOrderToPaid,
+  getMyOrders,
+  updateOrderToDelivered,
+  getOrders,
+}
