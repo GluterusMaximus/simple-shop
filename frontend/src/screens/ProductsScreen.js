@@ -19,6 +19,7 @@ import Rating from '../components/Rating.js'
 import Loader from '../components/Loader.js'
 import Message from '../components/Message.js'
 import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants.js'
+import Meta from '../components/Meta.js'
 
 const ProductsScreen = ({ history }) => {
   const [qty, setQty] = useState(1)
@@ -68,6 +69,7 @@ const ProductsScreen = ({ history }) => {
         <Message variant='danger'>{error}</Message>
       ) : (
         <>
+          <Meta title={product.name} />
           <Row>
             <Col md={6}>
               <Image src={product.image} alt={product.name} fluid></Image>
