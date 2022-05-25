@@ -7,7 +7,7 @@ import Message from '../components/Message.js'
 import Loader from '../components/Loader.js'
 import Paginate from '../components/Paginate.js'
 import Meta from '../components/Meta.js'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import ProductCarousel from '../components/ProductCarousel.js'
 
 const HomeScreen = () => {
@@ -24,7 +24,13 @@ const HomeScreen = () => {
   return (
     <>
       <Meta />
-      {!keyword && <ProductCarousel />}
+      {!keyword ? (
+        <ProductCarousel />
+      ) : (
+        <Link className='btn btn-light my-3' to='/'>
+          Go Back
+        </Link>
+      )}
       <h1>Latest products</h1>
       {loading ? (
         <Loader />
