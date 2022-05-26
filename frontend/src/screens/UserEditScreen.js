@@ -11,6 +11,7 @@ import { USER_UPDATE_RESET } from '../constants/userConstants'
 const UserEditScreen = () => {
   const [email, setEmail] = useState('')
   const [name, setName] = useState('')
+  const [password, setPassword] = useState('')
   const [isAdmin, setIsAdmin] = useState('')
 
   const dispatch = useDispatch()
@@ -37,6 +38,7 @@ const UserEditScreen = () => {
       } else {
         setName(user.name)
         setEmail(user.email)
+        setPassword(user.password)
         setIsAdmin(user.isAdmin)
       }
     }
@@ -44,7 +46,7 @@ const UserEditScreen = () => {
 
   const submitHandler = (e) => {
     e.preventDefault()
-    dispatch(updateUser({ _id: userId, name, email, isAdmin }))
+    dispatch(updateUser({ _id: userId, name, email, isAdmin, password }))
   }
 
   return (
@@ -79,6 +81,16 @@ const UserEditScreen = () => {
                 placeholder='Enter email'
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+
+            <Form.Group className='my-3'>
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type='text'
+                placeholder='Enter password'
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               ></Form.Control>
             </Form.Group>
 
