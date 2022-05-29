@@ -180,7 +180,12 @@ const ProductEditScreen = () => {
               {uploading && <Loader />}
             </Form.Group>
 
-            <Button className='my-3' type='submit' variant='primary'>
+            <Button
+              className='my-3'
+              type='submit'
+              variant='primary'
+              disabled={loadingUpdate}
+            >
               Update
             </Button>
           </Form>

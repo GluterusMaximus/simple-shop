@@ -22,7 +22,7 @@ const ProfileScreen = () => {
   const { loading, error, user } = userDetails
 
   const userUpdateProfile = useSelector((state) => state.userUpdateProfile)
-  const { success } = userUpdateProfile
+  const { success, loading: loadingUpdate } = userUpdateProfile
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
@@ -103,7 +103,12 @@ const ProfileScreen = () => {
             ></Form.Control>
           </Form.Group>
 
-          <Button className='my-3' type='submit' variant='primary'>
+          <Button
+            className='my-3'
+            type='submit'
+            variant='primary'
+            disabled={loadingUpdate}
+          >
             Update
           </Button>
         </Form>

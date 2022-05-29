@@ -214,6 +214,7 @@ const OrderScreen = () => {
                     type='button'
                     className='btn btn-block'
                     onClick={deliverHandler}
+                    disabled={loadingDeliver}
                   >
                     Mark Ass Delivered
                   </Button>

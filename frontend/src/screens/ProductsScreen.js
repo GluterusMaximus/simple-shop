@@ -35,8 +35,11 @@ const ProductsScreen = ({ history }) => {
   const { loading, product, error } = productDetails
 
   const productCreateReview = useSelector((state) => state.productCreateReview)
-  const { success: successProductReview, error: errorProductReview } =
-    productCreateReview
+  const {
+    success: successProductReview,
+    error: errorProductReview,
+    loading: loadingProductReview,
+  } = productCreateReview
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
@@ -194,7 +197,11 @@ const ProductsScreen = ({ history }) => {
                           onChange={(e) => setComment(e.target.value)}
                         ></Form.Control>
                       </Form.Group>
-                      <Button type='submit' variant='primary'>
+                      <Button
+                        type='submit'
+                        variant='primary'
+                        disabled={loadingProductReview}
+                      >
                         Submit
                       </Button>
                     </Form>

@@ -27,7 +27,7 @@ const PlaceOrderScreen = () => {
   ).toFixed(2)
 
   const orderCreate = useSelector((state) => state.orderCreate)
-  const { order, success, error } = orderCreate
+  const { order, success, error, loading } = orderCreate
 
   useEffect(() => {
     if (success) {
@@ -140,7 +140,7 @@ const PlaceOrderScreen = () => {
                 <Button
                   type='button'
                   className='btn-block'
-                  disabled={cart.cartItems === 0}
+                  disabled={cart.cartItems === 0 || loading}
                   onClick={placeOrderHandler}
                 >
                   Place Order
