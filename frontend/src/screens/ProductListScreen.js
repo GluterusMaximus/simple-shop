@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { Table, Button, Row, Col } from 'react-bootstrap'
+import { Table, Button, Row, Col, Modal } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { LinkContainer } from 'react-router-bootstrap'
 import Message from '../components/Message'
@@ -17,6 +17,8 @@ const ProductListScreen = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { pageNumber } = useParams()
+  const [showDelete, setShowDelete] = useState(false)
+  const [deleteId, setDeleteId] = useState(undefined)
 
   const productList = useSelector((state) => state.productList)
   const { loading, error, products, page, pages } = productList
@@ -61,10 +63,20 @@ const ProductListScreen = () => {
     pageNumber,
   ])
 
-  const deleteHandler = (id) => {
-    if (window.confirm('Are you sure you want to delete this product?')) {
-      dispatch(deleteProduct(id))
-    }
+  const deletePopupHandler = (id) => {
+    setShowDelete(true)
+    setDeleteId(id)
+  }
+
+  const closeHandler = () => {
+    setShowDelete(false)
+    setDeleteId(undefined)
+  }
+
+  const deleteHandler = () => {
+    dispatch(deleteProduct(deleteId))
+    setShowDelete(false)
+    setDeleteId(undefined)
   }
 
   const createProductHandler = () => {
@@ -125,7 +137,7 @@ const ProductListScreen = () => {
                     <Button
                       variant='danger'
                       className='btn-sm'
-                      onClick={() => deleteHandler(product._id)}
+                      onClick={() => deletePopupHandler(product._id)}
                     >
                       <i className='fas fa-trash'></i>
                     </Button>
@@ -135,6 +147,19 @@ const ProductListScreen = () => {
             </tbody>
           </Table>
           <Paginate pages={pages} page={page} isAdmin={true} />
+          <Modal show={showDelete} onHide={closeHandler}>
+            <Modal.Body>
+              Are you sure you want to delete this product?
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant='secondary' onClick={closeHandler}>
+                No
+              </Button>
+              <Button variant='primary' onClick={deleteHandler}>
+                Yes
+              </Button>
+            </Modal.Footer>
+          </Modal>
         </>
       )}
     </>

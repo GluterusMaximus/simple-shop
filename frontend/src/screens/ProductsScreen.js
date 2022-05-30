@@ -9,6 +9,7 @@ import {
   Button,
   ListGroupItem,
   Form,
+  Modal,
 } from 'react-bootstrap'
 import {
   listProductDetails,
@@ -25,6 +26,7 @@ const ProductsScreen = ({ history }) => {
   const [qty, setQty] = useState(1)
   const [rating, setRating] = useState(0)
   const [comment, setComment] = useState('')
+  const [showPopup, setShowPopup] = useState(false)
   const { id } = useParams()
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -33,15 +35,18 @@ const ProductsScreen = ({ history }) => {
   const { loading, product, error } = productDetails
 
   const productCreateReview = useSelector((state) => state.productCreateReview)
-  const { success: successProductReview, error: errorProductReview } =
-    productCreateReview
+  const {
+    success: successProductReview,
+    error: errorProductReview,
+    loading: loadingProductReview,
+  } = productCreateReview
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
   useEffect(() => {
     if (successProductReview) {
-      alert('Preview Submitted!')
+      setShowPopup(true)
       setRating(0)
       setComment('')
       dispatch({ type: PRODUCT_CREATE_REVIEW_RESET })
@@ -57,6 +62,8 @@ const ProductsScreen = ({ history }) => {
     e.preventDefault()
     dispatch(createProductReview(id, { rating, comment }))
   }
+
+  const closePopupHandler = () => setShowPopup(false)
 
   return (
     <>
@@ -190,7 +197,11 @@ const ProductsScreen = ({ history }) => {
                           onChange={(e) => setComment(e.target.value)}
                         ></Form.Control>
                       </Form.Group>
-                      <Button type='submit' variant='primary'>
+                      <Button
+                        type='submit'
+                        variant='primary'
+                        disabled={loadingProductReview}
+                      >
                         Submit
                       </Button>
                     </Form>
@@ -203,6 +214,14 @@ const ProductsScreen = ({ history }) => {
               </ListGroup>
             </Col>
           </Row>
+          <Modal show={showPopup} onHide={closePopupHandler}>
+            <Modal.Body>Review Submitted</Modal.Body>
+            <Modal.Footer>
+              <Button variant='primary' onClick={closePopupHandler}>
+                OK
+              </Button>
+            </Modal.Footer>
+          </Modal>
         </>
       )}
     </>
